@@ -12,11 +12,20 @@ function App() {
   let [awayScore, setAwayScore] = useState(0);
   
   // game scores
-  let [quarter, setQuarter] = useState(0);
+  let [quarter, setQuarter] = useState(1);
+  let [downs, setDowns] = useState(1);
 
+ const stopQuarter = () => quarter >= 4 
+  ? setQuarter(1) 
+  : setQuarter(quarter + 1);
 
+  const downsCount = () => downs >= 4 
+  ? setDowns(1) 
+  : setDowns(downs + 1);
+  
+  
 
-
+  
   return (
     <div className="container">
       <section className="scoreboard">
@@ -35,7 +44,7 @@ function App() {
           </div>
         </div>
 
-        <BottomRow gameQuarter = {quarter} />
+        <BottomRow gameQuarter = {quarter} gameDowns = {downs} />
 
       </section>
       <section className="buttons">
@@ -49,11 +58,15 @@ function App() {
           <button className="awayButtons__fieldGoal"onClick={() => setAwayScore(awayScore + 3)}>Away Field Goal</button>
         </div>
         <div className="gameButtons">
-
-          <button className="quarterButton" onClick={() => setQuarter(quarter + 1)}>Quarter</button>   
-
-          <button className="reset" onClick={() => [setHomeScore(0), setAwayScore(0), setQuarter(0),] }>RESET</button>       
+          <button className="quarterButton" onClick={stopQuarter}>Quarter</button>   
         </div>
+        <div className="gameButtons">
+          <button className="downsButton" onClick={downsCount}>Downs</button>   
+        </div>
+         
+        <div>
+          <button className="reset" onClick={() => [setHomeScore(0), setAwayScore(0), setQuarter(1)] }>RESET</button>       
+        </div>   
        
       </section>
     </div>
